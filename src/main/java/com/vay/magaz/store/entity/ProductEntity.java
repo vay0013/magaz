@@ -16,13 +16,14 @@ public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
-
+    @Column(nullable = false)
     String title;
-
+    @Column(nullable = false)
     String description;
-
+    @Column(nullable = false)
     String city;
-    double price;
+    @Column(nullable = false)
+    int price;
 //    @ManyToOne
 //    UserEntity user;
 }

@@ -1,26 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<form method="post">
-    <input type="text" name="title" placeholder="write product name"/>
-    <input type="text" name="description" placeholder="write product description"/>
-    <input type="text" name="city" placeholder="write product city"/>
-    <input type="text" name="price" placeholder="write product price"/>
-    <button type="submit">Add</button>
-</form>
-
 <h1>Товары</h1>
-    <div th:each="product : ${products}">
+<hr>
+<div th:each="product : ${products}">
         <div>
             <h2 th:text="${product.title}"></h2>
             <p th:text="${product.price}"></p>
-            <a href="/product/${product.id}">See more</a>
+            <a th:href="@{'/product/' + ${product.id}}">Подробнее</a>
         </div>
 
-    </div>
+</div>
+<hr>
+<form method="post">
+    <input type="text" name="title" placeholder="Название товара"/>
+    <input type="text" name="description" placeholder="Описание товара"/>
+    <input type="text" name="city" placeholder="Город"/>
+    <input type="number" name="price" placeholder="Цена товара"/>
+    <button type="submit">Добавить</button>
+</form>
 </body>
 </html>
