@@ -1,9 +1,6 @@
 package com.vay.magaz.store.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,13 +14,17 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
+
     String title;
+
     String description;
+
     String city;
-    int price;
+    double price;
 //    @ManyToOne
-//    User user;
+//    UserEntity user;
 }
 
 
