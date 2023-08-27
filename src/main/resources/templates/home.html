@@ -7,21 +7,39 @@
 <body>
 <h1>Товары</h1>
 <hr>
-<div th:each="product : ${products}">
-        <div>
-            <h2 th:text="${product.title}"></h2>
-            <p th:text="${product.price}"></p>
-            <a th:href="@{'/product/' + ${product.id}}">Подробнее</a>
-        </div>
 
-</div>
+<form action="filter" method="post">
+    <input type="text" name="filter">
+    <button type="submit">Найти</button>
+</form>
 <hr>
-<form method="post">
+<div th:each="product : ${productsFilter}">
+    <div>
+        <h2 th:text="${product.title}"></h2>
+        <p th:text="${product.price}"></p>
+        <a th:href="@{'/product/' + ${product.id}}">Подробнее</a>
+    </div>
+</div>
+
+<hr>
+
+<form action="create" method="post">
     <input type="text" name="title" placeholder="Название товара"/>
     <input type="text" name="description" placeholder="Описание товара"/>
     <input type="text" name="city" placeholder="Город"/>
     <input type="number" name="price" placeholder="Цена товара"/>
     <button type="submit">Добавить</button>
 </form>
+
+<hr>
+
+<div th:each="product : ${products}">
+    <div>
+        <h2 th:text="${product.title}"></h2>
+        <p th:text="${product.price}"></p>
+        <a th:href="@{'/product/' + ${product.id}}">Подробнее</a>
+    </div>
+
+</div>
 </body>
 </html>

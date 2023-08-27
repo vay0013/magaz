@@ -1,18 +1,23 @@
 package com.vay.magaz.controller;
 
-import com.vay.magaz.store.entity.ProductEntity;
+//import com.vay.magaz.service.ProductService;
+import com.vay.magaz.store.model.Product;
 import com.vay.magaz.store.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+        import org.springframework.web.server.ResponseStatusException;
+
+        import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductRepository productRepository;
+//    private final ProductService productService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -30,11 +35,12 @@ public class ProductController {
 
     }
 
-    @PostMapping("/")
+
+    @PostMapping("create")
     public String create(@RequestParam String title, @RequestParam String description,
                          @RequestParam int price, @RequestParam String city, Model model) {
 
-        productRepository.save(ProductEntity.builder()
+        productRepository.save(Product.builder()
                 .title(title)
                 .description(description)
                 .city(city)
@@ -45,6 +51,19 @@ public class ProductController {
         return "redirect:/";
     }
 
+
+    @Transactional
+    @PostMapping("filter")
+    public String filter(@RequestParam(value = "filter", required = false) Optional<String> optionalPrefixTitle, Model model) {
+        optionalPrefixTitle = optionalPrefixTitle.filter(prefixTitle -> !prefixTitle.trim().isEmpty());
+        if (optionalPrefixTitle.isPresent()) {
+            model.addAttribute("productsFilter",
+                    productRepository.streamAllByTitleStartsWithIgnoreCase(String.valueOf(optionalPrefixTitle)));
+        }
+        return "redirect:/";
+    }
+
+    @Transactional
     @PostMapping("/product/delete/{id}")
     public String delete(@PathVariable Long id) {
         productRepository.deleteById(id);
