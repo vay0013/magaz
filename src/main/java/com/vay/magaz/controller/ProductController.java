@@ -1,7 +1,7 @@
 package com.vay.magaz.controller;
 
 //import com.vay.magaz.service.ProductService;
-import com.vay.magaz.store.model.Product;
+import com.vay.magaz.store.entity.Product;
 import com.vay.magaz.store.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +22,7 @@ public class ProductController {
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("products", productRepository.findAll());
+
         return "home";
     }
 
