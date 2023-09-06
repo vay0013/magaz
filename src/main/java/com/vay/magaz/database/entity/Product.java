@@ -1,4 +1,4 @@
-package com.vay.magaz.store.entity;
+package com.vay.magaz.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
