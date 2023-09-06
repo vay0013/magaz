@@ -1,6 +1,7 @@
 package com.vay.magaz.controller;
 
 //import com.vay.magaz.service.ProductService;
+import com.vay.magaz.service.ProductService;
 import com.vay.magaz.store.entity.Product;
 import com.vay.magaz.store.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductRepository productRepository;
-//    private final ProductService productService;
+    private final ProductService productService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -41,33 +42,33 @@ public class ProductController {
     public String create(@RequestParam String title, @RequestParam String description,
                          @RequestParam int price, @RequestParam String city, Model model) {
 
-        productRepository.save(Product.builder()
-                .title(title)
-                .description(description)
-                .city(city)
-                .price(price)
-                .build());
+        productService.create(Product.builder()
+                    .title(title)
+                    .description(description)
+                    .city(city)
+                    .price(price)
+                    .build());
 
         model.addAttribute("products", productRepository.findAll());
         return "redirect:/";
     }
 
 
-    @Transactional
-    @PostMapping("filter")
-    public String filter(@RequestParam(value = "filter", required = false) Optional<String> optionalPrefixTitle, Model model) {
-        optionalPrefixTitle = optionalPrefixTitle.filter(prefixTitle -> !prefixTitle.trim().isEmpty());
-        if (optionalPrefixTitle.isPresent()) {
-            model.addAttribute("productsFilter",
-                    productRepository.streamAllByTitleStartsWithIgnoreCase(String.valueOf(optionalPrefixTitle)));
-        }
-        return "redirect:/";
-    }
+//    @PostMapping("filter")
+//    public String filter(@RequestParam(value = "filter", required = false) Optional<String> optionalPrefixTitle,
+//                         Model model) {
+//        optionalPrefixTitle = optionalPrefixTitle.filter(prefixTitle -> !prefixTitle.trim().isEmpty());
+//        if (optionalPrefixTitle.isPresent()) {
+//            model.addAttribute("productsFilter",
+//                    productRepository.streamAllByTitleStartsWithIgnoreCase(String.valueOf(optionalPrefixTitle)));
+//        }
+//        return "redirect:/";
+//    }
 
     @Transactional
     @PostMapping("/product/delete/{id}")
     public String delete(@PathVariable Long id) {
-        productRepository.deleteById(id);
+        productService.delete(id); // TODO: exception if return false
         return "redirect:/";
     }
 }

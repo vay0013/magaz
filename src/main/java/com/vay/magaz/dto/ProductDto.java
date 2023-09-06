@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 public class ProductDto {
     Long id;
     String title;
+    String description;
     String city;
     Integer price;
 }

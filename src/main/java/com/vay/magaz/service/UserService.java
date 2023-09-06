@@ -2,7 +2,7 @@
 //
 //import com.vay.magaz.store.repository.UserRepository;
 //import lombok.RequiredArgsConstructor;
-//sing access tokenimport org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 //import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@
 //                .map(user -> new org.springframework.security.core.userdetails.User(
 //                        user.getUsername(),
 //                        user.getPassword(),
-//                        Collections.singleton(user.getRole())
+//                        Collections.singleton(user.getAuthorities())
 //                ))
 //                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
 //    }
