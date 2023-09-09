@@ -4,7 +4,7 @@ package com.vay.magaz.service;
 import com.vay.magaz.database.entity.Product;
 import com.vay.magaz.database.repository.ProductRepository;
 import com.vay.magaz.dto.ProductDto;
-import com.vay.magaz.factory.ProductDtoFactory;
+import com.vay.magaz.mapper.ProductDtoMapper;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,16 +19,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     ProductRepository productRepository;
-    ProductDtoFactory productDtoFactory;
+    ProductDtoMapper productDtoMapper;
 
     public Optional<ProductDto> findById(Long id) {
         return productRepository.findById(id)
-                .map(productDtoFactory::makeProjectDto);
+                .map(productDtoMapper::makeProjectDto);
     }
 
     public List<ProductDto> findAll() {
         return productRepository.findAll().stream()
-                .map(productDtoFactory::makeProjectDto)
+                .map(productDtoMapper::makeProjectDto)
                 .toList();
     }
 

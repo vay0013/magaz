@@ -1,9 +1,9 @@
 package com.vay.magaz.controller;
 
-import com.vay.magaz.factory.ProductDtoFactory;
-import com.vay.magaz.service.ProductService;
 import com.vay.magaz.database.entity.Product;
 import com.vay.magaz.database.repository.ProductRepository;
+import com.vay.magaz.mapper.ProductDtoMapper;
+import com.vay.magaz.service.ProductService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -11,7 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -25,13 +28,12 @@ import java.util.stream.Stream;
 public class ProductController {
     ProductRepository productRepository;
     ProductService productService;
-    ProductDtoFactory productDtoFactory;
+    ProductDtoMapper productDtoMapper;
 
 
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("products", productService.findAll());
-
         return "home";
     }
 
@@ -39,7 +41,7 @@ public class ProductController {
     public String productInfo(@PathVariable Long id, Model model) {
         return productService.findById(id).map(product -> {
             model.addAttribute("product", product);
-            return "product-info";
+            return "product/product-info";
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
 
@@ -73,7 +75,7 @@ public class ProductController {
                 .orElseGet(productRepository::streamAllBy);
 
         model.addAttribute("productsFilter", projectStream
-                .map(productDtoFactory::makeProjectDto)
+                .map(productDtoMapper::makeProjectDto)
                 .collect(Collectors.toList()));
 
         return "filter_html";

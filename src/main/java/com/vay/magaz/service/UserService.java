@@ -1,27 +1,28 @@
-//package com.vay.magaz.service;
-//
-//import com.vay.magaz.database.repository.UserRepository;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.Collections;
-//
-//@Service
-//@RequiredArgsConstructor
-//public class UserService implements UserDetailsService {
-//    private final UserRepository userRepository;
-//
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return userRepository.findByUsername(username)
-//                .map(user -> new org.springframework.security.core.userdetails.User(
-//                        user.getUsername(),
-//                        user.getPassword(),
+package com.vay.magaz.service;
+
+import com.vay.magaz.database.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+
+@Service
+@RequiredArgsConstructor
+public class UserService implements UserDetailsService {
+    private final UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username)
+                .map(user -> new org.springframework.security.core.userdetails.User(
+                        user.getUsername(),
+                        user.getPassword(),
+                        Collections.singleton(user.getRole())
 //                        user.getAuthorities()
-//                ))
-//                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
-//    }
-//}
+                ))
+                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
+    }
+}

@@ -1,11 +1,11 @@
-package com.vay.magaz.factory;
+package com.vay.magaz.mapper;
 
 import com.vay.magaz.database.entity.Product;
 import com.vay.magaz.dto.ProductDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductDtoFactory {
+public class ProductDtoMapper {
     public ProductDto makeProjectDto(Product product) {
         return ProductDto.builder()
                 .id(product.getId())

@@ -2,18 +2,15 @@ package com.vay.magaz.service;
 
 import com.vay.magaz.database.entity.Product;
 import com.vay.magaz.database.repository.ProductRepository;
-import com.vay.magaz.dto.ProductDto;
-import com.vay.magaz.factory.ProductDtoFactory;
+import com.vay.magaz.mapper.ProductDtoMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,11 +20,11 @@ class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
     @InjectMocks
-    private ProductDtoFactory productDtoFactory;
+    private ProductDtoMapper productDtoMapper;
 
     @Test
     void findById(Long id) {
-        doReturn(Optional.of(new Product(PRODUCT_ID)))
+        doReturn(Optional.of(new Product(/* PRODUCT_ID */)))
                 .when(productRepository).findById(PRODUCT_ID);
     }
 
